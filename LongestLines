@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class LongestLines {
+
+
+
+
+
+
+	public static void main(String[] args) {
+		int count;
+		String swap = "";
+
+		File file = new File(args[0]);
+		if (!file.exists()) {
+			System.out.println(args[0] + " does not exist.");
+			return;
+		}
+		if (!(file.isFile() && file.canRead())) {
+			System.out.println(file.getName() + " cannot be read from.");
+			return;
+		}
+		try {
+
+			Scanner dataFile = new Scanner(new File(args[0]));
+
+			ArrayList<String> lineData = new ArrayList<String>();
+
+			while (dataFile.hasNextLine() == true ) {
+				String line = dataFile.nextLine();
+
+				Scanner scanner = new Scanner(line);
+				scanner.useDelimiter("\n");
+				while (scanner.hasNextLine()) {
+					lineData.add(scanner.next());
+				}
+				scanner.close();
+				
+					
+
+				
+			}
+			
+			count = Integer.parseInt(lineData.get(0));
+			
+			for (int a = 0; a < ( lineData.size() - 1 ); a++) {
+			      for (int b = 0; b < lineData.size() - a - 1; b++) {
+			        if (lineData.get(b).length() < lineData.get(b+1).length()) 
+			        {
+			          swap  = lineData.get(b);
+			          lineData.set(b, lineData.get(b+1))   ;
+			          lineData.set(b+1, swap)   ;
+			     
+			        }
+			      }
+			}
+			
+				for (int c = 0; c < count ; c++){
+					System.out.println(lineData.get(c));
+				}
+				
+				
+			 
+
+			dataFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+      }
+
+}
